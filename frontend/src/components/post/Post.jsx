@@ -21,9 +21,13 @@ const Post = () => {
         </div>
         <div className='postBottom'>
           <div className='postBottomLeft'>
-            <img src='' alt='' className='' />
+            <img src='assets/fblike.png' alt='' className='likeIcon' />
+            <img src='assets/heart.png' alt='' className='likeIcon' />
+            <span className='postLikeCounter'>32 people liked</span>
           </div>
-          <div className='postBottomRight'></div>
+          <div className='postBottomRight'>
+            <span className='postCommentText'>9 comments</span>
+          </div>
         </div>
       </div>
     </div>
