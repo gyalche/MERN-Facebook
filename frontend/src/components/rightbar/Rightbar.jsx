@@ -2,6 +2,8 @@ import React from 'react';
 import './rightbar.css';
 import { Users } from '../../dummyData';
 import Online from '../online/Online';
+import Home from '../../pages/home/Home';
+
 const Rightbar = ({ profile }) => {
   const HomeRightbar = () => {
     return (
@@ -60,7 +62,7 @@ const Rightbar = ({ profile }) => {
   return (
     <div className='rightbar'>
       <div className='rightbarWrapper'>
-        <ProfileRightbar />
+        {profile ? <ProfileRightbar /> : <Home />}
       </div>
     </div>
   );
