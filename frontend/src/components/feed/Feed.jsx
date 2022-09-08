@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Post from '../post/Post';
 import Share from '../share/Share';
 import './feed.css';
 import { Posts } from '../../dummyData';
+import axios from '../../axios';
 const Feed = () => {
+  const [posts, setPosts] = useState([]);
   return (
     <div className='feed'>
       <div className='feedWrapper'>
