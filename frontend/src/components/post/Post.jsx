@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './post.css';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Users } from '../../dummyData';
+import axios from '../../axios';
+import { format } from 'timeago.js';
+import { Link } from 'react-router-dom';
 const Post = ({ post }) => {
-  const user = Users.filter((u) => u.id === 1);
-  console.log(user);
-  console.log(post);
-  const [like, setLike] = useState(post.like);
+  const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users?userId=${post.userId}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [post.userId]);
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -18,17 +26,15 @@ const Post = ({ post }) => {
       <div className='postWrapper'>
         <div className='postTop'>
           <div className='postTopLeft'>
-            <img
-              src={Users.filter(
-                (u) => u.id === post?.userId[0]?.profilePicture
-              )}
-              alt=''
-              className='postProfileImg'
-            />
-            <span className='postUsername'>
-              {Users.filter((u) => u.id === post?.userId[0]?.username)}
-            </span>
-            <span className='postDate'>{post?.date}</span>
+            <Link to={`profile/${user.username}`}>
+              <img
+                src={user.profilePicture}
+                alt=''
+                className='postProfileImg'
+              />
+            </Link>
+            <span className='postUsername'>{user.username}</span>
+            <span className='postDate'>{format(post.createdAt)}</span>
           </div>
           <div className='postTopRight'>
             <MoreVertIcon />

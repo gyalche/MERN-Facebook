@@ -1,6 +1,7 @@
 import express from 'express';
 import Post from '../models/Post.js';
 const router = express.Router();
+import User from '../models/User.js';
 
 //creata a post;
 router.post('/', async (req, res) => {
@@ -78,6 +79,16 @@ router.get('/timeline/:userId', async (req, res) => {
       })
     );
     res.json(userPosts.concat(...friendPosts));
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+//get users all posts
+router.get('/profile/:username', async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    const posts = await Post.find({ userId: user._id });
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json(error);
   }
